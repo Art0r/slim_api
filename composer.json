@@ -1,0 +1,13 @@
+{
+    "name": "arthu/slim_api",
+    "authors": [
+        {
+            "name": "Art0r",
+            "email": "arthur0139@gmail.com"
+        }
+    ],
+    "require": {
+        "slim/slim": "4.*",
+        "slim/psr7": "^1.3"
+    }
+}
