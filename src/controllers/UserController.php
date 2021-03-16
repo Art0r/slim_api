@@ -10,10 +10,22 @@
             $this->conn = $pdo->getConn();
         }
 
-        public function getAllUsers(){
-            $stmt = $this->conn->prepare("SELECT * FROM users");
-            $stmt->execute();
+        private function query($rawQuery, $params = array()){
+            $stmt = $this->conn->prepare($rawQuery);
+            $stmt->execute($params);
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+
+        public function getAllUsers(){
+            $results = $this->query("SELECT * FROM users");
+
+            return $results;
+        }
+
+        public function getUser($id){
+            $results = $this->query("SELECT * FROM users WHERE id = ?", [$id]);
+
+            return $results;
         }
     }
 ?>

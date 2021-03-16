@@ -6,11 +6,20 @@
     use Slim\Factory\AppFactory;
 
     $app = AppFactory::create();
-    
 
-    $app->get("/", function(Request $req, Response $res) {
+    $app->get("/user", function(Request $req, Response $res) {
         $userController = new UserController();
         $result = $userController->getAllUsers();
+        $json = json_encode($result);
+        
+        $res->getBody()->write($json);
+        return $res->withHeader("Content-type", "application/json");
+    });
+
+    $app->get("/user/{id}", function(Request $req, Response $res, $args) {
+        $userController = new UserController();
+        $id = $args["id"];
+        $result = $userController->getUser($id);
         $json = json_encode($result);
         
         $res->getBody()->write($json);
