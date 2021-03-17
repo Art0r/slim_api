@@ -12,20 +12,32 @@
 
     $app->get("/user", function(Request $req, Response $res) {
         $userController = new UserController();
-        $result = $userController->getAllUsers();
-        $json = json_encode($result);
+
+        try {
+            $result = $userController->getAllUsers();
+            $json = json_encode($result);
+            
+            $res->getBody()->write($json);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
         
-        $res->getBody()->write($json);
         return $res->withHeader("Content-type", "application/json");
     });
 
     $app->get("/user/{id}", function(Request $req, Response $res, $args) {
         $userController = new UserController();
         $id = $args["id"];
-        $result = $userController->getUser($id);
-        $json = json_encode($result);
+
+        try {
+            $result = $userController->getUser($id);
+            $json = json_encode($result);
+            
+            $res->getBody()->write($json);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
         
-        $res->getBody()->write($json);
         return $res->withHeader("Content-type", "application/json");
     });
 
@@ -33,13 +45,17 @@
         $userController = new UserController();
         $params = $req->getParsedBody();
 
-        $userController->createUser($params["name"], $params["email"]);
+        try {
+            $userController->createUser($params["name"], $params["email"]);
 
-        $json = json_encode(array(
-            "sucess" => true,
-        ));
+            $json = json_encode(array(
+                "sucess" => true,
+            ));
 
-        $res->getBody()->write($json);
+            $res->getBody()->write($json);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
         return $res->withHeader("Content-type", "application/json");
     });
 
@@ -48,35 +64,45 @@
         $params = $req->getParsedBody();
         $id = $args["id"];
 
-        if (!isset($params["name"])){
-            $user = $userController->getUser($id);
-            $userController->updateUser($id, $user[0]["name"], $params["email"]);
-        } else if (!isset($params["email"])) {
-            $user = $userController->getUser($id);
-            $userController->updateUser($id, $params["name"], $user[0]["email"]);
-        } else {
-            $userController->updateUser($id, $params["name"], $params["email"]);
+        try {
+            if (!isset($params["name"])){
+                $user = $userController->getUser($id);
+                $userController->updateUser($id, $user[0]["name"], $params["email"]);
+            } else if (!isset($params["email"])) {
+                $user = $userController->getUser($id);
+                $userController->updateUser($id, $params["name"], $user[0]["email"]);
+            } else {
+                $userController->updateUser($id, $params["name"], $params["email"]);
+            }
+    
+            $json = json_encode(array(
+                "sucess" => true,
+            ));
+    
+            $res->getBody()->write($json);
+        } catch (\Throwable $th) {
+            throw $th;
         }
-
-        $json = json_encode(array(
-            "sucess" => true,
-        ));
-
-        $res->getBody()->write($json);
+        
         return $res->withHeader("Content-type", "application/json");
     });
 
     $app->delete("/user/{id}", function (Request $req, Response $res, $args) {
         $userController = new UserController();
         $id = $args["id"];
+        
+        try {
+            $userController->deleteUser($id);
 
-        $userController->deleteUser($id);
+            $json = json_encode(array(
+                "sucess" => true,
+            ));
 
-        $json = json_encode(array(
-            "sucess" => true,
-        ));
+            $res->getBody()->write($json);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
 
-        $res->getBody()->write($json);
         return $res->withHeader("Content-type", "application/json");
     });
 
