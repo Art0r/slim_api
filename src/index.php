@@ -64,7 +64,20 @@
 
         $res->getBody()->write($json);
         return $res->withHeader("Content-type", "application/json");
+    });
 
+    $app->delete("/user/{id}", function (Request $req, Response $res, $args) {
+        $userController = new UserController();
+        $id = $args["id"];
+
+        $userController->deleteUser($id);
+
+        $json = json_encode(array(
+            "sucess" => true,
+        ));
+
+        $res->getBody()->write($json);
+        return $res->withHeader("Content-type", "application/json");
     });
 
     $app->run();

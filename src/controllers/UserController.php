@@ -36,5 +36,9 @@
         public function updateUser($id, $newName, $newEmail) {
             $this->query("UPDATE " . table . " SET name = ?, email = ? WHERE id = ?", [$newName, $newEmail, $id]);
         }
+
+        public function deleteUser($id) {
+            $this->query("DELETE FROM " . table . " WHERE id = ?", [$id]);
+        }
     }
 ?>
