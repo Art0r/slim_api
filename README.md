@@ -5,9 +5,9 @@ API usando o slim framework
 ### iniciar servidor: php -S localhost:8080 -t src src/index.php
 
 #### Query para resetar/criar o banco de dados
-drop database dbphp;
+drop database if exists dbphp;
+create schema if not exists dbphp;
 
-create schema dbphp;
 use dbphp;
 
 create table users (
