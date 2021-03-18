@@ -16,8 +16,8 @@ create table users (
     email varchar(32) not null
 );
 
-INSERT INTO users (name, email) VALUES ("Arthur", "arthur@gmail.com");
-INSERT INTO users (name, email) VALUES ("Lucas", "lucas@gmail.com");
-INSERT INTO users (name, email) VALUES ("Simone", "simone@gmail.com");
+INSERT INTO users (name, email) VALUES ("pessoa1", "pessoa1@gmail.com");
+INSERT INTO users (name, email) VALUES ("pessoa2", "pessoa2@gmail.com");
+INSERT INTO users (name, email) VALUES ("pessoa3", "pessoa3@gmail.com");
 
 SELECT * FROM users;
